@@ -14,8 +14,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies using test setup
+        uses: ./.github/actions/setup
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Project
