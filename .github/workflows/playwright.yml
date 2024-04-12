@@ -13,8 +13,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Change directory
-        run: cd todo-app
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
