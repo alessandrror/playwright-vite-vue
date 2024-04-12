@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "test:api": "playwright test --project api --config playwright.config.ts",
     "test:e2e": "playwright test --project e2e --config playwright.config.ts",
+    "test:docker": "docker run -d -p 3000:3000 --name docker-playwright-container",
+    "test:docker:ci": "npm test:api:ci:wait && npm test:api --workers 2",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
