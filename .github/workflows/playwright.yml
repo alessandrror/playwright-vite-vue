@@ -5,9 +5,12 @@ on:
   pull_request:
     branches: [main, dev]
 jobs:
-  test:
+  scaffold:
+    name: Node & NPM config runner
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    outputs:
+      RUNNER: ${{ runner.name }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,7 +21,13 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Project
-        run: npm run dev
+        run: echo "selected runner = ${{ runner.name }} && npm run dev"
+
+  test:
+    name: Playwright testing runner
+    needs: scaffold
+    runs-on: ${{needs.scaffold.outputs.RUNNER}}
+    steps:
       - name: Run Playwright tests
         run: npm run test:e2e
       - uses: actions/upload-artifact@v4
