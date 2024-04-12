@@ -8,20 +8,19 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    container: node:20.12.2
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Install dependencies using test setup
-        uses: ./.github/actions/setup
+      - name: Install dependencies
+        run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      # - name: Run Project
+      #   run: npm run dev
       - name: Run Playwright tests
         run: npm run test:e2e
-        env:
-          HOME: /root
       - uses: actions/upload-artifact@v4
         if: always()
         with:
