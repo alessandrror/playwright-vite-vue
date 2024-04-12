@@ -18,6 +18,8 @@ jobs:
         uses: ./.github/actions/setup
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Install Playwright x2
+        run: npx playwright install
       - name: Run Project
         run: (npm run dev&)
       - name: Run Playwright tests
