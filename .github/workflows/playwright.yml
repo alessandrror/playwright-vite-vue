@@ -22,6 +22,8 @@ jobs:
         run: (npm run dev&)
       - name: Run Playwright tests
         run: npm run test:e2e
+        env:
+          HOME: /root
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -48,4 +50,5 @@ jobs:
 #       - name: Install dependencies
 #         run: npm ci
 #       - name: Run your tests
-#         run: npx playwright test
+#         run: npx playwright test        env:
+#           HOME: /root
