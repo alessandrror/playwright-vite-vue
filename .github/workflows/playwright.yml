@@ -1,3 +1,34 @@
+# name: Playwright Tests
+# on:
+#   push:
+#     branches: [main, dev]
+#   pull_request:
+#     branches: [main, dev]
+# jobs:
+#   test:
+#     timeout-minutes: 60
+#     runs-on: ubuntu-latest
+#     container: node:20.12.2
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: lts/*
+#       - name: Install dependencies using test setup
+#         uses: ./.github/actions/setup
+#       - name: Install Playwright Browsers
+#         run: npx playwright install --with-deps
+#       - name: Run Project
+#         run: (npm run dev&)
+#       - name: Run Playwright tests
+#         run: npm run test:e2e
+#       - uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: playwright-report
+#           path: playwright-report/
+#           retention-days: 30
+
 name: Playwright Tests
 on:
   push:
@@ -5,26 +36,17 @@ on:
   pull_request:
     branches: [main, dev]
 jobs:
-  test:
-    timeout-minutes: 60
+  playwright:
+    name: 'Playwright Tests'
     runs-on: ubuntu-latest
-    container: node:20.12.2
+    container:
+      image: mcr.microsoft.com/playwright:v1.43.0-jammy
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Install dependencies using test setup
-        uses: ./.github/actions/setup
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      # - name: Run Project
-      #   run: (npm run dev&)
-      - name: Run Playwright tests
-        run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+      - name: Install dependencies
+        run: npm ci
+      - name: Run your tests
+        run: npx playwright test
