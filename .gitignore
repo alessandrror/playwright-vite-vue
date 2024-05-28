@@ -32,3 +32,5 @@ coverage
 # Test reports and results
 playwright-report/
 test-results/
+
+*storybook.log
