@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [main, dev]
 jobs:
-  test:
+  pull_request_test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
