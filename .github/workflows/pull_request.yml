@@ -5,6 +5,9 @@ on:
 jobs:
   pull_request_test:
     timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
