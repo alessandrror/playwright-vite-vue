@@ -1,10 +1,13 @@
 name: Playwright Tests
 on:
-  push:
+  pull_request:
     branches: [main, dev]
 jobs:
-  tests:
+  pull_request_test:
     timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,7 +19,13 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: npm run test:e2e
+        run: npm run test:pr
+
+      - name: Generate Pull Request report
+        uses: daun/playwright-report-summary@v3
+        with:
+          report-file: results.json
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
